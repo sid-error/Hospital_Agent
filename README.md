@@ -5,7 +5,8 @@ A multi-agent medical triage and specialist consultation system built using the 
 ## 🚀 Features
 - **Receptionist Orchestrator**: Primary entry point that triages symptoms and consults specialists.
 - **Specialist Agents**: Specialized expertise in Neurology, Cardiology, Pulmonology, Nephrology, and Gastrology.
-- **Web Grounding**: Specialists use `google_search` for real-time medical research.
+- **Bidirectional Handoffs**: The Receptionist seamlessly transfers control to specialists, and specialists can transfer control *back* if the conversation shifts out of their domain.
+- **Web Grounding**: Specialists delegate medical research to a dedicated `search_agent` sub-agent that uses the `google_search` built-in tool.
 - **Persistent Session State**: Maintains a "Patient Chart" (JSON) across the entire session.
 - **Emergency Filter**: Hard-coded safety check for life-threatening symptoms (e.g., "chest pain").
 - **ADK Web Support**: Fully compatible with the `adk web` visual interface.
@@ -46,9 +47,9 @@ A multi-agent medical triage and specialist consultation system built using the 
 ## 🎮 How to Run
 
 ### 1. Visual Web Interface (Recommended)
-Launch the interactive ADK browser interface:
+Launch the interactive ADK browser interface with A2A enabled:
 ```bash
-adk web
+adk web --a2a
 ```
 *Note: Run this from the `Hospital_Agents` root directory.*
 
@@ -59,4 +60,8 @@ python medical_system.py
 ```
 
 ## 🧠 Architecture
-The system uses the **Agent-as-a-Tool** model. The `receptionist` agent treats specialized agents as expert tools. This architecture is chosen to resolve the technical conflict between Gemini's "Built-in Tools" (Search) and "Function Calling" (Handoffs) within a single agent context.
+The system uses a **Bidirectional Transfer of Control (A2A)** model with **Agent Cards**. 
+
+- The `receptionist` orchestrates multiple remote specialist agents by invoking their Agent Cards (`agent.json`). 
+- When a specialist detects a symptom outside their field, they use `TransferToAgentTool` to hand control back to the receptionist, creating a highly autonomous, fluid multi-agent conversation.
+- **Search Wrapper:** To bypass a strict Gemini API limitation preventing the combination of Built-In Tools (`google_search`) and Function Calling (Handoffs), the `google_search` tool is wrapped inside a dedicated `search_agent`. The specialists invoke this sub-agent via standard `AgentTool` function calling, maintaining a stable and error-free API payload.

@@ -28,7 +28,7 @@ def emergency_filter(user_input: str) -> bool:
 # --- 2. MAIN SYSTEM RUN LOOP ---
 
 async def run_medical_system():
-    print("--- 🏥 Medical Expert System Powered by ADK ---")
+    print("--- [Hospital] Medical Expert System Powered by ADK ---")
     print("Type 'exit' or 'quit' to end.\n")
 
     APP_NAME = "medical_system"
@@ -65,7 +65,7 @@ async def run_medical_system():
 
         # 1. Emergency Filter (Pre-process)
         if emergency_filter(user_input):
-            print("\nAssistant: [EMERGENCY ALERT] 🚨 Life-threatening symptoms detected! 🚨")
+            print("\nAssistant: [EMERGENCY ALERT] !!! Life-threatening symptoms detected! !!!")
             print("Please call 911 immediately or go to the nearest Emergency Room.")
             continue
 

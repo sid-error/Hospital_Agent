@@ -1,0 +1,13 @@
+{
+  "name": "Neurologist",
+  "description": "Specialist in brain and nervous system disorders.",
+  "url": "http://127.0.0.1:8000/a2a/neurologist",
+  "version": "1.0",
+  "skills": [],
+  "capabilities": {
+    "streaming": false,
+    "polling": false
+  },
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Cardiologist",
+  "description": "Specialist in heart and vascular health.",
+  "url": "http://127.0.0.1:8000/a2a/cardiologist",
+  "version": "1.0",
+  "skills": [],
+  "capabilities": {
+    "streaming": false,
+    "polling": false
+  },
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"]
+}
