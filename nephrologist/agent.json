@@ -1,7 +1,7 @@
 {
   "name": "Nephrologist",
   "description": "Specialist in kidney health.",
-  "url": "http://127.0.0.1:8000/a2a/nephrologist",
+  "url": "http://127.0.0.1:8004",
   "version": "1.0",
   "skills": [],
   "capabilities": {

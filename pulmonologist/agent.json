@@ -1,7 +1,7 @@
 {
   "name": "Pulmonologist",
   "description": "Specialist in respiratory health.",
-  "url": "http://127.0.0.1:8000/a2a/pulmonologist",
+  "url": "http://127.0.0.1:8003",
   "version": "1.0",
   "skills": [],
   "capabilities": {

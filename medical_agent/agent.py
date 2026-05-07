@@ -3,6 +3,12 @@ from google.adk.agents import Agent
 from google.adk.tools.google_search_tool import google_search
 
 from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
+import sys
+import os
+
+# Add parent directory to path so hospital_logger can be imported
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from hospital_logger import log_event
 
 # --- 1. SPECIALIST AGENT DEFINITIONS (VIA A2A AGENT CARDS) ---
 
@@ -41,7 +47,7 @@ gastrologist = RemoteA2aAgent(
 # --- 2. RECEPTIONIST (ORCHESTRATOR) AGENT DEFINITION ---
 
 triage_instruction = """
-You are the Receptionist (Primary Orchestrator).
+You are the Receptionist (Primary Orchestrator). Do not invent a personal name for yourself; refer to yourself only as 'the Receptionist'.
 GOAL: Identify the correct specialist for the patient based on symptoms.
 
 PROCESS:
@@ -77,3 +83,5 @@ receptionist = Agent(
 
 # Required for adk web discovery
 root_agent = receptionist
+
+log_event("INFO", "system", "agent_init", "Receptionist (Orchestrator) and Remote A2A specialist agents initialized.")

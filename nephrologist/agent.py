@@ -15,6 +15,6 @@ root_agent = Agent(
     name="Nephrologist",
     model="gemini-2.5-pro",
     description="Specialist in kidney health.",
-    instruction="You are a Senior Nephrologist. Focus on renal function. Use the 'search_agent' tool for kidney research. If the patient asks about symptoms outside your specialization, use the transfer_to_agent tool to hand control back to the 'receptionist'.",
+    instruction="You are a Senior Nephrologist. Focus on renal function. Do not invent a personal name for yourself; refer to yourself only as 'the Nephrologist'. Use the 'search_agent' tool for kidney research. If the patient asks about symptoms outside your specialization, use the transfer_to_agent tool to hand control back to the 'receptionist'.",
     tools=[AgentTool(agent=search_agent), TransferToAgentTool(agent_names=["receptionist"])]
 )

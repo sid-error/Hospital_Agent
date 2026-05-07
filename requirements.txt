@@ -3,3 +3,4 @@ a2a-sdk<1.0.0
 google-genai
 python-dotenv
 pydantic
+streamlit
