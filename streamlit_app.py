@@ -147,37 +147,26 @@ with tab1:
                     st.session_state.messages.append({"role": "assistant", "content": response_text})
 
 with tab2:
-    st.header("Raw JSON Logs")
-    if st.button("Refresh Logs"):
+    st.header("Monocle Observability")
+    st.markdown("""
+    **Logging has been successfully migrated to Monocle Telemetry!** 🚀
+    
+    Instead of standard Python text logs, all Agent logic, tool calls, and LLM requests are now automatically instrumented and exported as OpenTelemetry-compatible traces.
+    
+    ### How to view the traces:
+    1. Traces are automatically saved in the `./monocle/` directory in this workspace.
+    2. To visualize them beautifully, install the **Okahu Trace Visualizer** extension in VS Code.
+    3. You can explore Gantt charts, token counts, and full execution paths!
+    """)
+    
+    if st.button("Refresh / Check for new trace files"):
         st.rerun()
-        
-    log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs", "hospital_agent.log")
-    if os.path.exists(log_file_path):
-        with open(log_file_path, "r") as f:
-            logs = f.readlines()
-            
-        # Display logs in reverse order (newest first)
-        for line in reversed(logs):
-            try:
-                log_json = json.loads(line)
-                
-                # Format visually
-                level_color = "green"
-                level = log_json.get("level", "INFO")
-                if level == "DEBUG": level_color = "blue"
-                elif level == "WARNING": level_color = "orange"
-                elif level == "ERROR": level_color = "red"
-                elif level == "CRITICAL": level_color = "darkred"
-                
-                agent = log_json.get('agent', 'system')
-                if agent == "HANDOFF": level_color = "purple"
-                
-                event_type = log_json.get('event', 'log')
-                
-                st.markdown(f"**<span style='color:{level_color}'>[{level}] [{event_type}]</span> {agent}**: {log_json.get('message')}", unsafe_allow_html=True)
-                with st.expander("Raw Data"):
-                    st.json(log_json)
-            except:
-                st.text(line)
+
+    monocle_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "monocle")
+    if os.path.exists(monocle_dir):
+        st.subheader("Generated Trace Files:")
+        for f in os.listdir(monocle_dir):
+            if f.endswith(".json"):
+                st.code(f, language="text")
     else:
-        st.info("No logs found yet.")
+        st.info("No monocle traces generated yet. Try sending a chat message to the agents first!")

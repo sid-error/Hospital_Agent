@@ -1,0 +1,328 @@
+[{
+    "name": "google.genai.models.AsyncModels.generate_content",
+    "context": {
+        "trace_id": "5b163a77d419e7edc6fc4ada51d47c73",
+        "span_id": "8e5c7bd5b1bd4f58",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "1ff49e058c2faecb",
+    "start_time": "2026-05-07T07:45:27.999755Z",
+    "end_time": "2026-05-07T07:45:31.319500Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\adk\\models\\google_llm.py:245",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "inference.gemini",
+        "entity.1.inference_endpoint": "https://generativelanguage.googleapis.com/",
+        "entity.1.provider_name": "gcp",
+        "entity.2.name": "gemini-2.5-pro",
+        "entity.2.type": "model.llm.gemini-2.5-pro",
+        "span.type": "inference",
+        "entity.3.name": "transfer_to_agent",
+        "entity.3.type": "tool.function",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "4d06926c3cfaa96e22e317a6b72fd0f9",
+        "scope.agentic.invocation": "ccf48f11c515f6f31049f921a4929e6",
+        "entity.count": 3
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:45:27.999755Z",
+            "attributes": {
+                "input": [
+                    "{\"system\": \"\\nYou are the Receptionist (Primary Orchestrator). Do not invent a personal name for yourself; refer to yourself only as 'the Receptionist'.\\nGOAL: Identify the correct specialist for the patient based on symptoms.\\n\\nPROCESS:\\n1. Greet the patient.\\n2. Ask for symptoms and vitals.\\n3. Use the 'Patient Chart' in the session state to track findings.\\n4. Consult the appropriate specialized agent using your tools.\\n\\nSPECIALIST MAPPING:\\n- Cardiologist: Heart, chest pain, palpitations.\\n- Neurologist: Brain, nerves, seizures, headaches.\\n- Pulmonologist: Lungs, breathing, coughing.\\n- Nephrologist: Kidneys, urinary issues.\\n- Gastrologist: Stomach, digestion, liver.\\n\\nIMPORTANT: Do not diagnose. Use the transfer_to_agent tool to grant control to the correct specialist.\\n\\n\\nYou are an agent. Your internal name is \\\"receptionist\\\". The description about you is \\\"Primary orchestrator for medical triage.\\\".\\n\\n\\nYou have a list of other agents to transfer to:\\n\\n\\nAgent name: Neurologist\\nAgent description: Specialist in brain and nervous system disorders.\\n\\n\\nAgent name: Cardiologist\\nAgent description: Specialist in heart and vascular health.\\n\\n\\nAgent name: Pulmonologist\\nAgent description: Specialist in respiratory health.\\n\\n\\nAgent name: Nephrologist\\nAgent description: Specialist in kidney health.\\n\\n\\nAgent name: Gastrologist\\nAgent description: Specialist in digestive health.\\n\\n\\nIf you are the best to answer the question according to your description,\\nyou can answer it.\\n\\nIf another agent is better for answering the question according to its\\ndescription, call `transfer_to_agent` function to transfer the question to that\\nagent. When transferring, do not generate any text other than the function\\ncall.\\n\\n**NOTE**: the only available agents for `transfer_to_agent` function are\\n`Cardiologist`, `Gastrologist`, `Nephrologist`, `Neurologist`, `Pulmonologist`.\\n\"}",
+                    "{\"user\": \"i have a stomach ache\"}"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:45:31.319500Z",
+            "attributes": {
+                "response": "{\"ai\": \"\\\"model\\\": transfer_to_agent, \\\"args\\\": {'agent_name': 'Gastrologist'}\"}"
+            }
+        },
+        {
+            "name": "metadata",
+            "timestamp": "2026-05-07T07:45:31.319500Z",
+            "attributes": {
+                "completion_tokens": 20,
+                "prompt_tokens": 592,
+                "total_tokens": 739,
+                "thoughts_tokens": 127,
+                "finish_reason": "FUNCTION_CALL",
+                "finish_type": "tool_call"
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "google.adk.tools.function_tool.FunctionTool.run_async",
+    "context": {
+        "trace_id": "5b163a77d419e7edc6fc4ada51d47c73",
+        "span_id": "5da03a63faae1c2d",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "1ff49e058c2faecb",
+    "start_time": "2026-05-07T07:45:31.339135Z",
+    "end_time": "2026-05-07T07:45:31.339727Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\adk\\flows\\llm_flows\\functions.py:1111",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "tool.adk",
+        "entity.1.name": "transfer_to_agent",
+        "entity.1.description": "Transfer the question to another agent.\n\nThis tool hands off control to another agent when it's more suitable to\nanswer the user's question according to the agent's description.\n\nNote:\n  For most use cases, you should use TransferToAgentTool instead of this\n  function directly. TransferToAgentTool provides additional enum constraints\n  that prevent LLMs from hallucinating invalid agent names.\n\nArgs:\n  agent_name: the agent name to transfer to.",
+        "entity.2.name": "receptionist",
+        "entity.2.type": "agent.adk",
+        "span.type": "agentic.tool.invocation",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "4d06926c3cfaa96e22e317a6b72fd0f9",
+        "scope.agentic.invocation": "ccf48f11c515f6f31049f921a4929e6",
+        "entity.count": 2,
+        "span.subtype": "content_generation"
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:45:31.339727Z",
+            "attributes": {
+                "input": "{\"agent_name\": \"Gastrologist\"}"
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:45:31.339727Z",
+            "attributes": {
+                "response": "None"
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "google.adk.agents.base_agent.BaseAgent.run_async",
+    "context": {
+        "trace_id": "5b163a77d419e7edc6fc4ada51d47c73",
+        "span_id": "b11b62b6111f67d6",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "1ff49e058c2faecb",
+    "start_time": "2026-05-07T07:45:31.339727Z",
+    "end_time": "2026-05-07T07:45:42.455282Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\adk\\flows\\llm_flows\\base_llm_flow.py:1086",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "agent.adk",
+        "entity.1.name": "Gastrologist",
+        "entity.1.description": "Specialist in digestive health.",
+        "entity.1.from_agent": "receptionist",
+        "entity.1.from_agent_span_id": "1ff49e058c2faecb",
+        "span.type": "agentic.invocation",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "4d06926c3cfaa96e22e317a6b72fd0f9",
+        "scope.agentic.invocation": "9d79155077c8fa0867eb20de30d3c7a9",
+        "entity.count": 1,
+        "span.subtype": "content_processing"
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:45:31.339727Z",
+            "attributes": {
+                "input": [
+                    "i have a stomach ache"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:45:42.455282Z",
+            "attributes": {
+                "response": "I am the Gastrologist. I understand you have a stomach ache. To better understand what might be happening, I need to ask you a few questions.\n\nPlease describe the ache:\n\n*   **Where is the pain located?** Is it in the upper or lower part of your abdomen? Is it on the left, right, or in the middle?\n*   **What does the pain feel like?** Is it sharp, dull, cramping, or burning?\n*   **When did it start?**\n*   **Is the pain constant, or does it come and go?**\n*   **Does anything seem to make it better or worse?** (e.g., eating, certain foods, lying down)\n*   **Are you experiencing any other symptoms?** Such as nausea, vomiting, diarrhea, constipation, bloating, or fever?\n\nPlease remember, I am an AI assistant and cannot provide a medical diagnosis. This information will help me provide you with general knowledge based on established gastroenterological guidelines. You should consult a healthcare professional for any medical concerns."
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "google.adk.agents.base_agent.BaseAgent.run_async",
+    "context": {
+        "trace_id": "5b163a77d419e7edc6fc4ada51d47c73",
+        "span_id": "1ff49e058c2faecb",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "e2eecf48cd1da2c2",
+    "start_time": "2026-05-07T07:45:27.266377Z",
+    "end_time": "2026-05-07T07:45:42.456650Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\adk\\runners.py:605",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "agent.adk",
+        "entity.1.name": "receptionist",
+        "entity.1.description": "Primary orchestrator for medical triage.",
+        "entity.1.from_agent_span_id": "e2eecf48cd1da2c2",
+        "span.type": "agentic.invocation",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "4d06926c3cfaa96e22e317a6b72fd0f9",
+        "scope.agentic.invocation": "ccf48f11c515f6f31049f921a4929e6",
+        "entity.count": 1,
+        "span.subtype": "content_processing"
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:45:27.266377Z",
+            "attributes": {
+                "input": [
+                    "i have a stomach ache"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:45:42.456348Z",
+            "attributes": {
+                "response": "I am the Gastrologist. I understand you have a stomach ache. To better understand what might be happening, I need to ask you a few questions.\n\nPlease describe the ache:\n\n*   **Where is the pain located?** Is it in the upper or lower part of your abdomen? Is it on the left, right, or in the middle?\n*   **What does the pain feel like?** Is it sharp, dull, cramping, or burning?\n*   **When did it start?**\n*   **Is the pain constant, or does it come and go?**\n*   **Does anything seem to make it better or worse?** (e.g., eating, certain foods, lying down)\n*   **Are you experiencing any other symptoms?** Such as nausea, vomiting, diarrhea, constipation, bloating, or fever?\n\nPlease remember, I am an AI assistant and cannot provide a medical diagnosis. This information will help me provide you with general knowledge based on established gastroenterological guidelines. You should consult a healthcare professional for any medical concerns."
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "google.adk.runners.Runner.run_async",
+    "context": {
+        "trace_id": "5b163a77d419e7edc6fc4ada51d47c73",
+        "span_id": "e2eecf48cd1da2c2",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "e501b9b282f408d1",
+    "start_time": "2026-05-07T07:45:27.263597Z",
+    "end_time": "2026-05-07T07:45:42.456650Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\OneDrive\\Desktop\\Shopalyst_Internship\\Hospital_Agents\\streamlit_app.py:75",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "agent.adk",
+        "span.type": "agentic.turn",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "4d06926c3cfaa96e22e317a6b72fd0f9",
+        "entity.count": 1,
+        "span.subtype": "turn"
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:45:27.263597Z",
+            "attributes": {
+                "input": [
+                    "i have a stomach ache"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:45:42.456650Z",
+            "attributes": {
+                "response": "I am the Gastrologist. I understand you have a stomach ache. To better understand what might be happening, I need to ask you a few questions.\n\nPlease describe the ache:\n\n*   **Where is the pain located?** Is it in the upper or lower part of your abdomen? Is it on the left, right, or in the middle?\n*   **What does the pain feel like?** Is it sharp, dull, cramping, or burning?\n*   **When did it start?**\n*   **Is the pain constant, or does it come and go?**\n*   **Does anything seem to make it better or worse?** (e.g., eating, certain foods, lying down)\n*   **Are you experiencing any other symptoms?** Such as nausea, vomiting, diarrhea, constipation, bloating, or fever?\n\nPlease remember, I am an AI assistant and cannot provide a medical diagnosis. This information will help me provide you with general knowledge based on established gastroenterological guidelines. You should consult a healthcare professional for any medical concerns."
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "workflow",
+    "context": {
+        "trace_id": "5b163a77d419e7edc6fc4ada51d47c73",
+        "span_id": "e501b9b282f408d1",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": null,
+    "start_time": "2026-05-07T07:45:27.263597Z",
+    "end_time": "2026-05-07T07:45:42.456650Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\OneDrive\\Desktop\\Shopalyst_Internship\\Hospital_Agents\\streamlit_app.py:75",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "4d06926c3cfaa96e22e317a6b72fd0f9",
+        "workflow.name": "hospital_system",
+        "span.type": "workflow",
+        "entity.1.name": "hospital_system",
+        "entity.1.type": "workflow.generic",
+        "entity.2.type": "app_hosting.generic",
+        "entity.2.name": "generic"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+]

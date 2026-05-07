@@ -4,12 +4,11 @@ A multi-agent medical triage and specialist consultation system built using the 
 
 ## 🚀 Features
 - **Receptionist Orchestrator**: Primary entry point that triages symptoms and consults specialists.
-- **Specialist Agents**: Specialized expertise in Neurology, Cardiology, Pulmonology, Nephrology, and Gastrology.
+- **Specialist Agents**: Decentralized A2A microservices for Neurology, Cardiology, Pulmonology, Nephrology, and Gastrology.
 - **Bidirectional Handoffs**: The Receptionist seamlessly transfers control to specialists, and specialists can transfer control *back* if the conversation shifts out of their domain.
 - **Web Grounding**: Specialists delegate medical research to a dedicated `search_agent` sub-agent that uses the `google_search` built-in tool.
-- **Persistent Session State**: Maintains a "Patient Chart" (JSON) across the entire session.
-- **Emergency Filter**: Hard-coded safety check for life-threatening symptoms (e.g., "chest pain").
-- **ADK Web Support**: Fully compatible with the `adk web` visual interface.
+- **Streamlit Dashboard**: A beautiful, custom-built chat interface for interacting with the system.
+- **Monocle Telemetry**: Full integration with `monocle_apptrace` to generate OpenTelemetry JSON traces of all Agent and Tool executions.
 
 ## 🛠️ Setup
 
@@ -26,42 +25,39 @@ A multi-agent medical triage and specialist consultation system built using the 
 
 3. **Install Dependencies**:
    ```bash
-   pip install google-adk
-   pip install google-genai
-   pip install python-dotenv
-   pip install pydantic
+   pip install -r requirements.txt
    ```
 
 4. **Environment Variables**:
    - Create a `.env` file based on `.env.example`.
-   - Add your `GOOGLE_API_KEY=your_google_api_key_here`
-   - Add your `GOOGLE_GENAI_API_KEY=your_google_api_key_here`
+   - Add your `GEMINI_API_KEY=your_api_key_here` (or `GOOGLE_API_KEY`).
 
 ## 📂 Project Structure
-- `medical_agent/`: Core agent package (discovered by ADK).
-  - `agent.py`: Agent definitions (root_agent = receptionist).
-- `medical_system.py`: CLI entry point for terminal interaction.
-- `requirements.txt`: Project dependencies.
-- `.env`: API key configuration.
+- `medical_agent/`: The Orchestrator agent that routes the patient.
+- `cardiologist/`, `neurologist/`, etc.: Independent A2A specialist agents with their own `server.py` and `agent.json`.
+- `streamlit_app.py`: The custom frontend UI.
+- `start_servers.bat` / `.ps1`: Scripts to launch the background A2A uvicorn servers.
+- `hospital_logger.py`: Centralized Monocle telemetry configuration.
 
 ## 🎮 How to Run
 
-### 1. Visual Web Interface (Recommended)
-Launch the interactive ADK browser interface with A2A enabled:
+### 1. Start the A2A Backend Servers
+Because this system uses decentralized Agent-to-Agent routing, you must start the specialist microservices first.
+Run the startup script in your terminal (Anaconda Prompt or PowerShell):
 ```bash
-adk web --a2a
+start_servers.bat
 ```
-*Note: Run this from the `Hospital_Agents` root directory.*
+*(This will boot 5 background `uvicorn` servers on ports 8001-8005).*
 
-### 2. Terminal CLI
-Run the system directly in your terminal:
+### 2. Launch the Streamlit Frontend
+In the same terminal, launch the user interface:
 ```bash
-python medical_system.py
+streamlit run streamlit_app.py
 ```
 
 ## 🧠 Architecture
 The system uses a **Bidirectional Transfer of Control (A2A)** model with **Agent Cards**. 
 
-- The `receptionist` orchestrates multiple remote specialist agents by invoking their Agent Cards (`agent.json`). 
+- The `receptionist` orchestrates multiple remote specialist agents by invoking their Agent Cards (`agent.json`) via local HTTP ports.
 - When a specialist detects a symptom outside their field, they use `TransferToAgentTool` to hand control back to the receptionist, creating a highly autonomous, fluid multi-agent conversation.
-- **Search Wrapper:** To bypass a strict Gemini API limitation preventing the combination of Built-In Tools (`google_search`) and Function Calling (Handoffs), the `google_search` tool is wrapped inside a dedicated `search_agent`. The specialists invoke this sub-agent via standard `AgentTool` function calling, maintaining a stable and error-free API payload.
+- **Observability:** `Monocle` traces every execution step. You can view the output in the `./monocle/` directory using the Okahu Trace Visualizer VS Code extension.

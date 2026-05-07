@@ -1,0 +1,218 @@
+[{
+    "name": "google.genai.models.AsyncModels.generate_content",
+    "context": {
+        "trace_id": "7aa5a6a7e34e8929072f0d6f7be1ebaf",
+        "span_id": "1cc5be2fb4cdd305",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "40f629cbf8fafe16",
+    "start_time": "2026-05-07T07:46:28.993875Z",
+    "end_time": "2026-05-07T07:46:34.350617Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\adk\\models\\google_llm.py:245",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "inference.gemini",
+        "entity.1.inference_endpoint": "https://generativelanguage.googleapis.com/",
+        "entity.1.provider_name": "gcp",
+        "entity.2.name": "gemini-2.5-pro",
+        "entity.2.type": "model.llm.gemini-2.5-pro",
+        "span.type": "inference",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "c57c0bfb83c538f7b79402e45dfbea6d",
+        "scope.agentic.invocation": "41500779bb13c397a183510117ce54f2",
+        "entity.count": 2
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:46:28.994906Z",
+            "attributes": {
+                "input": [
+                    "{\"system\": \"\\nYou are the Receptionist (Primary Orchestrator). Do not invent a personal name for yourself; refer to yourself only as 'the Receptionist'.\\nGOAL: Identify the correct specialist for the patient based on symptoms.\\n\\nPROCESS:\\n1. Greet the patient.\\n2. Ask for symptoms and vitals.\\n3. Use the 'Patient Chart' in the session state to track findings.\\n4. Consult the appropriate specialized agent using your tools.\\n\\nSPECIALIST MAPPING:\\n- Cardiologist: Heart, chest pain, palpitations.\\n- Neurologist: Brain, nerves, seizures, headaches.\\n- Pulmonologist: Lungs, breathing, coughing.\\n- Nephrologist: Kidneys, urinary issues.\\n- Gastrologist: Stomach, digestion, liver.\\n\\nIMPORTANT: Do not diagnose. Use the transfer_to_agent tool to grant control to the correct specialist.\\n\\n\\nYou are an agent. Your internal name is \\\"receptionist\\\". The description about you is \\\"Primary orchestrator for medical triage.\\\".\\n\\n\\nYou have a list of other agents to transfer to:\\n\\n\\nAgent name: Neurologist\\nAgent description: Specialist in brain and nervous system disorders.\\n\\n\\nAgent name: Cardiologist\\nAgent description: Specialist in heart and vascular health.\\n\\n\\nAgent name: Pulmonologist\\nAgent description: Specialist in respiratory health.\\n\\n\\nAgent name: Nephrologist\\nAgent description: Specialist in kidney health.\\n\\n\\nAgent name: Gastrologist\\nAgent description: Specialist in digestive health.\\n\\n\\nIf you are the best to answer the question according to your description,\\nyou can answer it.\\n\\nIf another agent is better for answering the question according to its\\ndescription, call `transfer_to_agent` function to transfer the question to that\\nagent. When transferring, do not generate any text other than the function\\ncall.\\n\\n**NOTE**: the only available agents for `transfer_to_agent` function are\\n`Cardiologist`, `Gastrologist`, `Nephrologist`, `Neurologist`, `Pulmonologist`.\\n\"}",
+                    "{\"user\": \"i have a stomach ache\"}",
+                    "{\"model\": null}",
+                    "{\"user\": null}",
+                    "{\"user\": \"For context:\"}",
+                    "{\"user\": \"actually i have a stomach ache\"}"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:46:34.350617Z",
+            "attributes": {
+                "response": "{\"model\": \"Hello, I am the Receptionist. I see you've been connected with the Gastrologist. To help you, they will need a little more information. Please answer the questions the Gastrologist asked to the best of your ability.\"}"
+            }
+        },
+        {
+            "name": "metadata",
+            "timestamp": "2026-05-07T07:46:34.350617Z",
+            "attributes": {
+                "completion_tokens": 47,
+                "prompt_tokens": 867,
+                "total_tokens": 1232,
+                "thoughts_tokens": 318,
+                "finish_reason": "STOP",
+                "finish_type": "success"
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "google.adk.agents.base_agent.BaseAgent.run_async",
+    "context": {
+        "trace_id": "7aa5a6a7e34e8929072f0d6f7be1ebaf",
+        "span_id": "40f629cbf8fafe16",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0394e524fa0c6139",
+    "start_time": "2026-05-07T07:46:28.311409Z",
+    "end_time": "2026-05-07T07:46:34.352395Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\google\\adk\\runners.py:605",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "agent.adk",
+        "entity.1.name": "receptionist",
+        "entity.1.description": "Primary orchestrator for medical triage.",
+        "entity.1.from_agent_span_id": "0394e524fa0c6139",
+        "span.type": "agentic.invocation",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "c57c0bfb83c538f7b79402e45dfbea6d",
+        "scope.agentic.invocation": "41500779bb13c397a183510117ce54f2",
+        "entity.count": 1,
+        "span.subtype": "content_processing"
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:46:28.311409Z",
+            "attributes": {
+                "input": [
+                    "actually i have a stomach ache"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:46:34.352395Z",
+            "attributes": {
+                "response": "Hello, I am the Receptionist. I see you've been connected with the Gastrologist. To help you, they will need a little more information. Please answer the questions the Gastrologist asked to the best of your ability."
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "google.adk.runners.Runner.run_async",
+    "context": {
+        "trace_id": "7aa5a6a7e34e8929072f0d6f7be1ebaf",
+        "span_id": "0394e524fa0c6139",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "388cc3521cda0eaf",
+    "start_time": "2026-05-07T07:46:28.311409Z",
+    "end_time": "2026-05-07T07:46:34.352395Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\OneDrive\\Desktop\\Shopalyst_Internship\\Hospital_Agents\\streamlit_app.py:75",
+        "workflow.name": "hospital_system",
+        "entity.1.type": "agent.adk",
+        "span.type": "agentic.turn",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "c57c0bfb83c538f7b79402e45dfbea6d",
+        "entity.count": 1,
+        "span.subtype": "turn"
+    },
+    "events": [
+        {
+            "name": "data.input",
+            "timestamp": "2026-05-07T07:46:28.311409Z",
+            "attributes": {
+                "input": [
+                    "actually i have a stomach ache"
+                ]
+            }
+        },
+        {
+            "name": "data.output",
+            "timestamp": "2026-05-07T07:46:34.352395Z",
+            "attributes": {
+                "response": "Hello, I am the Receptionist. I see you've been connected with the Gastrologist. To help you, they will need a little more information. Please answer the questions the Gastrologist asked to the best of your ability."
+            }
+        }
+    ],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+,{
+    "name": "workflow",
+    "context": {
+        "trace_id": "7aa5a6a7e34e8929072f0d6f7be1ebaf",
+        "span_id": "388cc3521cda0eaf",
+        "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": null,
+    "start_time": "2026-05-07T07:46:28.311409Z",
+    "end_time": "2026-05-07T07:46:34.352395Z",
+    "status": {
+        "status_code": "OK"
+    },
+    "attributes": {
+        "monocle_apptrace.version": "0.8.0",
+        "monocle_apptrace.language": "python",
+        "span_source": "C:\\Users\\sidha\\OneDrive\\Desktop\\Shopalyst_Internship\\Hospital_Agents\\streamlit_app.py:75",
+        "scope.agentic.session": "dcf7ca44-522d-4c20-bc38-e38c6056492e",
+        "scope.agentic.turn": "c57c0bfb83c538f7b79402e45dfbea6d",
+        "workflow.name": "hospital_system",
+        "span.type": "workflow",
+        "entity.1.name": "hospital_system",
+        "entity.1.type": "workflow.generic",
+        "entity.2.type": "app_hosting.generic",
+        "entity.2.name": "generic"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+        "attributes": {
+            "service.name": "hospital_system"
+        },
+        "schema_url": ""
+    }
+}
+]
