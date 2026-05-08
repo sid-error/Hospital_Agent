@@ -1,8 +1,8 @@
-# 🏥 Medical Expert System (ADK)
+#  Medical Expert System (ADK)
 
 A multi-agent medical triage and specialist consultation system built using the **Google Agent Development Kit (ADK)** and **Gemini 2.5 Pro**.
 
-## 🚀 Features
+##  Features
 - **Receptionist Orchestrator**: Primary entry point that triages symptoms and consults specialists.
 - **Specialist Agents**: Decentralized A2A microservices for Neurology, Cardiology, Pulmonology, Nephrology, and Gastrology.
 - **Bidirectional Handoffs**: The Receptionist seamlessly transfers control to specialists, and specialists can transfer control *back* if the conversation shifts out of their domain.
@@ -10,7 +10,7 @@ A multi-agent medical triage and specialist consultation system built using the 
 - **Streamlit Dashboard**: A beautiful, custom-built chat interface for interacting with the system.
 - **Monocle Telemetry**: Full integration with `monocle_apptrace` to generate OpenTelemetry JSON traces of all Agent and Tool executions.
 
-## 🛠️ Setup
+##  Setup
 
 1. **Clone & Navigate**:
    ```bash
@@ -32,14 +32,14 @@ A multi-agent medical triage and specialist consultation system built using the 
    - Create a `.env` file based on `.env.example`.
    - Add your `GEMINI_API_KEY=your_api_key_here` (or `GOOGLE_API_KEY`).
 
-## 📂 Project Structure
+##  Project Structure
 - `medical_agent/`: The Orchestrator agent that routes the patient.
 - `cardiologist/`, `neurologist/`, etc.: Independent A2A specialist agents with their own `server.py` and `agent.json`.
 - `streamlit_app.py`: The custom frontend UI.
 - `start_servers.bat` / `.ps1`: Scripts to launch the background A2A uvicorn servers.
 - `hospital_logger.py`: Centralized Monocle telemetry configuration.
 
-## 🎮 How to Run & Test the System
+##  How to Run & Test the System
 
 Follow these steps in order to fully boot the system and its observability infrastructure:
 
@@ -72,7 +72,7 @@ streamlit run streamlit_app.py
 4. **Verify Traces on Disk (.jsonl):** Click on the "Observability & Telemetry" tab in Streamlit to verify that the raw traces are being appended to the `logs/traces.jsonl` file.
 5. **Verify Traces in Jaeger:** Open your web browser to `http://localhost:16686/` (Jaeger). Select `hospital_system` under the "Service" dropdown and click "Find Traces" to view the detailed Agent execution Gantt charts!
 
-## 🧠 Architecture
+##  Architecture
 The system uses a **Bidirectional Transfer of Control (A2A)** model with **Agent Cards**. 
 
 - The `receptionist` orchestrates multiple remote specialist agents by invoking their Agent Cards (`agent.json`) via local HTTP ports.
