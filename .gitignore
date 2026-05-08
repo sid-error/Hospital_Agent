@@ -12,3 +12,6 @@ env/
 
 monocle/
 logs/
+
+jaeger-*/
+*.tar.gz

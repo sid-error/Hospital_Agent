@@ -8,7 +8,7 @@ import os
 
 # Add parent directory to path so hospital_logger can be imported
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from hospital_logger import log_event
+
 
 # --- 1. SPECIALIST AGENT DEFINITIONS (VIA A2A AGENT CARDS) ---
 
@@ -83,5 +83,3 @@ receptionist = Agent(
 
 # Required for adk web discovery
 root_agent = receptionist
-
-log_event("INFO", "system", "agent_init", "Receptionist (Orchestrator) and Remote A2A specialist agents initialized.")

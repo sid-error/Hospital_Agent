@@ -13,7 +13,7 @@ from google.genai import types
 
 # Local Imports
 from medical_agent.agent import receptionist
-from hospital_logger import log_event, log_agent_handoff, logger
+
 
 load_dotenv()
 
@@ -58,7 +58,7 @@ if 'session_id' not in st.session_state:
         return session.id
     
     st.session_state.session_id = asyncio.run(init_session())
-    log_event("INFO", "system", "session_start", f"Streamlit Session initialized: {st.session_state.session_id}", session_id=st.session_state.session_id, user_id=USER_ID)
+
 
 if 'messages' not in st.session_state:
     st.session_state.messages = []
@@ -83,18 +83,11 @@ async def run_adk_agent(user_input: str):
             if hasattr(event, 'content') and getattr(event.content, 'parts', None):
                 for part in event.content.parts:
                     if hasattr(part, 'function_call') and part.function_call:
-                        func_name = part.function_call.name
-                        if func_name == "transfer_to_agent":
-                            target = "unknown"
-                            if hasattr(part.function_call, 'args') and 'agent_name' in part.function_call.args:
-                                target = part.function_call.args['agent_name']
-                            log_agent_handoff(current_agent, target, session_id=session_id)
-                        else:
-                            log_event("DEBUG", current_agent, "tool_call", f"Called tool: {func_name}", session_id=session_id)
+                        pass # Handled automatically by Monocle traces
 
                     elif hasattr(part, 'text') and part.text:
                         full_response += part.text
-                        log_event("INFO", current_agent, "model_response", part.text.strip(), session_id=session_id)
+
         
         return full_response
     except Exception as e:
@@ -123,12 +116,12 @@ with tab1:
         with st.chat_message("user"):
             st.markdown(prompt)
             
-        log_event("INFO", "patient", "user_input", prompt, session_id=st.session_state.session_id)
+
 
         # Emergency Filter
         if emergency_filter(prompt):
             alert_msg = "🚨 **[EMERGENCY ALERT] !!! Life-threatening symptoms detected! !!!**\nPlease call 911 immediately or go to the nearest Emergency Room."
-            log_event("WARNING", "system", "emergency_trigger", "Life-threatening symptoms detected.", session_id=st.session_state.session_id)
+
             
             st.session_state.messages.append({"role": "assistant", "content": alert_msg})
             with st.chat_message("assistant"):
@@ -147,26 +140,27 @@ with tab1:
                     st.session_state.messages.append({"role": "assistant", "content": response_text})
 
 with tab2:
-    st.header("Monocle Observability")
+    st.header("Observability & Telemetry")
     st.markdown("""
-    **Logging has been successfully migrated to Monocle Telemetry!** 🚀
+    **All trace data is fully managed by Monocle and OpenTelemetry!** 🚀
     
-    Instead of standard Python text logs, all Agent logic, tool calls, and LLM requests are now automatically instrumented and exported as OpenTelemetry-compatible traces.
+    The legacy Python logging system has been completely removed. Every action your agents take is now automatically recorded as an OpenTelemetry trace.
     
-    ### How to view the traces:
-    1. Traces are automatically saved in the `./monocle/` directory in this workspace.
-    2. To visualize them beautifully, install the **Okahu Trace Visualizer** extension in VS Code.
-    3. You can explore Gantt charts, token counts, and full execution paths!
+    ### How to view your traces:
+    1. **On Disk (.jsonl):** All telemetry is securely aggregated into a single file at `logs/traces.jsonl` (one JSON trace per line) instead of thousands of tiny files.
+    2. **In Jaeger (Web):** Traces are streamed live to your local Jaeger database. Open `http://localhost:16686` in your browser to view interactive Gantt charts of the Agent executions!
     """)
     
-    if st.button("Refresh / Check for new trace files"):
+    if st.button("Refresh Trace List"):
         st.rerun()
 
-    monocle_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "monocle")
-    if os.path.exists(monocle_dir):
-        st.subheader("Generated Trace Files:")
-        for f in os.listdir(monocle_dir):
-            if f.endswith(".json"):
-                st.code(f, language="text")
+    trace_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs", "traces.jsonl")
+    if os.path.exists(trace_file):
+        st.success(f"Trace file is active: `{trace_file}`")
+        try:
+            file_size = os.path.getsize(trace_file)
+            st.text(f"File Size: {file_size / 1024:.2f} KB")
+        except:
+            pass
     else:
-        st.info("No monocle traces generated yet. Try sending a chat message to the agents first!")
+        st.info("No traces generated yet. Try sending a chat message to the agents first!")
