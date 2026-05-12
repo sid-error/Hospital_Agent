@@ -1,0 +1,241 @@
+{
+  "eval_set_id": "hospital_system_full_eval_v2",
+  "name": "Hospital Multi-Agent Comprehensive Test Set v2",
+  "description": "Full coverage tests including tool trajectory and LLM-judged response semantic quality.",
+  "eval_cases": [
+    {
+      "evalId": "cardio_case_1_chest_pain",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I have a sharp, stabbing pain in my chest that radiates to my left arm." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Cardiologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I am transferring you to the Cardiologist immediately to evaluate your chest pain and radiating arm pain." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "cardio_case_2_palpitations",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "My heart feels like it's skipping beats and I feel very lightheaded." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Cardiologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "You should speak with our Cardiologist about these palpitations and lightheadedness right away." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "neuro_case_1_migraine",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I've had a throbbing headache for two days and I'm sensitive to light." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Neurologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I am connecting you with the Neurologist to discuss your persistent headache and light sensitivity." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "neuro_case_2_seizure",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "My friend just had a brief period of uncontrolled shaking and loss of consciousness." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Neurologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I'm transferring you to the Neurologist for urgent consultation regarding the loss of consciousness and shaking." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "pulmo_case_1_cough",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I have a persistent dry cough and I can hear a wheezing sound when I breathe." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Pulmonologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "The Pulmonologist will help you with that persistent cough and wheezing." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "pulmo_case_2_sob",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I get extremely short of breath even after walking a very short distance." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Pulmonologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I am referring you to the Pulmonologist for your shortness of breath during exertion." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "nephro_case_1_kidney_pain",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I have intense pain in my lower back near my ribs and it hurts when I urinate." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Nephrologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "The Nephrologist is the right specialist for your back pain and urinary discomfort." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "nephro_case_2_edema",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "My ankles are very swollen and I noticed my urine has become very dark." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Nephrologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "Let's have the Nephrologist check those swollen ankles and the change in urine color." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "gastro_case_1_stomach",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I have severe abdominal cramping and constant bloating after every meal." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Gastrologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I am transferring you to the Gastrologist to investigate your abdominal cramping and bloating." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "gastro_case_2_reflux",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I have frequent acid reflux and a sour taste in my mouth after eating." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Gastrologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "The Gastrologist will assist you with your acid reflux and sour taste symptoms." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "receptionist_greeting",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "Hello, who are you and how can you help me today?" }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "Hello, I am the Receptionist. I can help triage your symptoms and connect you with the appropriate specialist." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "receptionist_ambiguous",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I just don't feel well overall, I'm tired and have a low fever." }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I'm sorry you're not feeling well. To help me find the right specialist, could you tell me more about any specific pains or other symptoms?" }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "specialist_handoff_back_triage",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "Actually, my stomach has been hurting a lot lately, please help me with it" }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Gastrologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "I understand. I'll connect you with our Gastrologist to address your stomach pain." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "specialist_research_routing",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "I want to know about the latest heart surgery techniques." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Cardiologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "The Cardiologist can provide you with information on the latest heart surgery techniques." }]
+          }
+        }
+      ]
+    },
+    {
+      "evalId": "complex_vitals_triage",
+      "conversation": [
+        {
+          "userContent": {
+            "parts": [{ "text": "My blood pressure is 160/100 and I have a headache." }]
+          },
+          "intermediateData": {
+            "toolUses": [{ "name": "transfer_to_agent", "args": { "agent_name": "Cardiologist" } }]
+          },
+          "finalResponse": {
+            "parts": [{ "text": "That's a high blood pressure reading. I am transferring you to the Cardiologist immediately." }]
+          }
+        }
+      ]
+    }
+  ]
+}

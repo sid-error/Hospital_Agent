@@ -15,3 +15,5 @@ logs/
 
 jaeger-*/
 *.tar.gz
+eval_results/
+.adk_eval_cache/

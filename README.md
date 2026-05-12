@@ -72,6 +72,26 @@ streamlit run streamlit_app.py
 4. **Verify Traces on Disk (.jsonl):** Click on the "Observability & Telemetry" tab in Streamlit to verify that the raw traces are being appended to the `logs/traces.jsonl` file.
 5. **Verify Traces in Jaeger:** Open your web browser to `http://localhost:16686/` (Jaeger). Select `hospital_system` under the "Service" dropdown and click "Find Traces" to view the detailed Agent execution Gantt charts!
 
+##  Evaluation (Native ADK Eval)
+The system includes a native ADK evaluation suite to measure triage accuracy, tool (specialist) trajectory, and response quality using **AI-powered Rubrics**.
+
+### Prerequisites
+Ensure you have the evaluation module installed:
+```bash
+pip install "google-adk[eval]"
+```
+
+### 1. Run Evaluation
+Ensure the specialist servers are running (`start_servers.bat`), then run the automated evaluation script:
+```cmd
+run_eval.bat
+```
+*(This script automatically clears old results and caches before running the evaluation).*
+
+### 2. View Results
+Evaluation results, including trajectory scores and **AI Judge feedback**, will be printed to the console and stored in:
+`medical_agent/.adk/eval_history/`
+
 ##  Architecture
 The system uses a **Bidirectional Transfer of Control (A2A)** model with **Agent Cards**. 
 
